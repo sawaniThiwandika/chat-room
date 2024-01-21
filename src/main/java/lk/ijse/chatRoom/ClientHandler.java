@@ -29,7 +29,8 @@ public class ClientHandler {
                 try {
                     while (socket.isConnected()) {
                         msg = dataInputStream.readUTF();
-                        for (ClientHandler clientHandler : clients) {
+                       for (ClientHandler clientHandler : clients) {
+
                             if (clientHandler.socket.getPort() != socket.getPort()) {
                                 clientHandler.dataOutputStream.writeUTF(msg);
                                 clientHandler.dataOutputStream.flush();

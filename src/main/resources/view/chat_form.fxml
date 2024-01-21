@@ -32,7 +32,7 @@
             <Image url="@../assets/microphone.png" />
          </image>
       </ImageView>
-      <Button fx:id="voiceButton" layoutX="403.0" layoutY="473.0" mnemonicParsing="false" onAction="#VoiceButtonOnAction" opacity="0.02" prefHeight="26.0" prefWidth="24.0" text="Button" />
+      <Button fx:id="voiceButton" layoutX="403.0" layoutY="474.0" mnemonicParsing="false" onAction="#VoiceButtonOnAction" opacity="0.02" prefHeight="26.0" prefWidth="24.0" text="Button" />
       <Button fx:id="emojiIcon" layoutX="11.0" layoutY="467.0" mnemonicParsing="false" onAction="#emojiButtonOnAction" opacity="0.0" prefHeight="38.0" prefWidth="30.0" text="Button" />
       <ImageView fitHeight="330.0" fitWidth="168.0" layoutX="460.0" layoutY="87.0">
          <image>

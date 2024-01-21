@@ -10,7 +10,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lk.ijse.chatRoom.Dao.UserDao;
+import lk.ijse.chatRoom.Dao.impl.UserDaoImpl;
 import lk.ijse.chatRoom.Server;
+import lk.ijse.chatRoom.bo.Impl.UserBoImpl;
+import lk.ijse.chatRoom.bo.UserBo;
+import lk.ijse.chatRoom.dto.UserDto;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -32,6 +37,7 @@ public class LoginFormController {
 
     @FXML
     private TextField txtUserName;
+    UserBo userBo=new UserBoImpl();
 
     @FXML
     void forgetPasswordOnAction(ActionEvent event) {
@@ -51,25 +57,37 @@ public class LoginFormController {
 
     @FXML
     void loginButtonOnAction(ActionEvent event) throws IOException {
+        boolean userNamePassword;
 
-        if (!txtUserName.getText().isEmpty()&&txtUserName.getText().matches("[A-Za-z0-9]+")){
-            Stage primaryStage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chat_form.fxml"));
+        if (!txtUserName.getText().isEmpty()) {
+            try {
+                userNamePassword = userBo.checkUserNamePassword(new UserDto(txtUserName.getText(), txtPassword.getText()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if (userNamePassword) {
+                Stage primaryStage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chat_form.fxml"));
 
-            ChatFormController controller = new ChatFormController();
-            controller.setClientName(txtUserName.getText());
+                ChatFormController controller = new ChatFormController();
+                controller.setClientName(txtUserName.getText());
 
-            primaryStage.setScene(new Scene(fxmlLoader.load()));
-            primaryStage.setTitle(txtUserName.getText());
-            primaryStage.setResizable(true);
-            primaryStage.centerOnScreen();
-            primaryStage.setOnCloseRequest(windowEvent -> {
-                controller.shutdown();
-            });
-            primaryStage.show();
+                primaryStage.setScene(new Scene(fxmlLoader.load()));
+                primaryStage.setTitle(txtUserName.getText());
+                primaryStage.setResizable(true);
+                primaryStage.centerOnScreen();
+                primaryStage.setOnCloseRequest(windowEvent -> {
+                    controller.shutdown();
+                });
+                primaryStage.show();
 
-            txtUserName.clear();
-        }else{
+                txtUserName.clear();
+            }
+            else {
+                new Alert(Alert.AlertType.ERROR, "Incorrect").show();
+            }
+        }
+        else {
             new Alert(Alert.AlertType.ERROR, "Please enter your name").show();
         }
     }

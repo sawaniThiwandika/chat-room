@@ -71,7 +71,7 @@ public class ChatFormController {
 
                     while (socket.isConnected()){
                         String receivingMsg = dataInputStream.readUTF();
-                        receiveMessage(receivingMsg, ChatFormController.this.vBox);
+                        receiveMessage(receivingMsg,vBox);
                     }
                 }catch (IOException e){
                     e.printStackTrace();
@@ -79,7 +79,7 @@ public class ChatFormController {
             }
         }).start();
 
-        this.vBox.heightProperty().addListener(new ChangeListener<Number>() {
+       vBox.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 scrollpane.setVvalue((Double) newValue);
@@ -220,6 +220,7 @@ public class ChatFormController {
     }
 
     public void setClientName(String text) {
-      user=text;
+
+        user=text;
     }
 }

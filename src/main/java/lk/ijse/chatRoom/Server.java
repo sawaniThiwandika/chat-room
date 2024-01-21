@@ -14,12 +14,10 @@ public class Server {
     private static Server server;
 
     private List<ClientHandler> clients = new ArrayList<>();
+public  static List<Socket> sockets = new ArrayList<>();
 
     private Server() throws IOException {
         serverSocket = new ServerSocket(3000);
-
-    }
-    public void initialize() throws IOException {
 
     }
     public static Server getInstance() throws IOException {
@@ -28,8 +26,11 @@ public class Server {
 
     public void makeSocket(){
         while (!serverSocket.isClosed()){
+
             try{
                 socket = serverSocket.accept();
+                sockets.add(socket);
+                System.out.println("clients size"+clients.size());
                 ClientHandler clientHandler = new ClientHandler(socket,clients);
                 clients.add(clientHandler);
                 System.out.println("client socket accepted "+socket.toString());
