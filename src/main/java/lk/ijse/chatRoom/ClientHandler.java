@@ -13,10 +13,9 @@ public class ClientHandler {
     private DataOutputStream dataOutputStream;
     private String msg = "";
 
-    public ClientHandler(Socket socket, List<ClientHandler> clients) {
+    public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
-            this.clients = clients;
             this.dataInputStream = new DataInputStream(socket.getInputStream());
             this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
         }catch (IOException e){
@@ -27,10 +26,12 @@ public class ClientHandler {
             @Override
             public void run() {
                 try {
-                    while (socket.isConnected()) {
+                    while (socket.isConnected()) {// sever hdl dena socket eka
+                        System.out.println("client handler while loop ekaethule mn dan inne");
                         msg = dataInputStream.readUTF();
+                        clients=Server.getClientList();
                        for (ClientHandler clientHandler : clients) {
-
+                           System.out.println("client size in clienthandler "+clients.size());
                             if (clientHandler.socket.getPort() != socket.getPort()) {
                                 clientHandler.dataOutputStream.writeUTF(msg);
                                 clientHandler.dataOutputStream.flush();

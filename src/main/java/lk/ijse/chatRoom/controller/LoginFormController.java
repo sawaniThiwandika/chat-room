@@ -19,6 +19,7 @@ import lk.ijse.chatRoom.dto.UserDto;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.sql.SQLException;
 
 public class LoginFormController {
@@ -56,7 +57,7 @@ public class LoginFormController {
     }
 
     @FXML
-    void loginButtonOnAction(ActionEvent event) throws IOException {
+    void loginButtonOnAction(ActionEvent event) throws IOException, SQLException {
         boolean userNamePassword;
 
         if (!txtUserName.getText().isEmpty()) {
@@ -68,11 +69,13 @@ public class LoginFormController {
             if (userNamePassword) {
                 Stage primaryStage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chat_form.fxml"));
+                Parent root = fxmlLoader.load();
+                ChatFormController controller =fxmlLoader.getController();
+                System.out.println("controller "+controller);
+                controller.initialize(txtUserName.getText());
 
-                ChatFormController controller = new ChatFormController();
-                controller.setClientName(txtUserName.getText());
 
-                primaryStage.setScene(new Scene(fxmlLoader.load()));
+                primaryStage.setScene(new Scene(root));
                 primaryStage.setTitle(txtUserName.getText());
                 primaryStage.setResizable(true);
                 primaryStage.centerOnScreen();
