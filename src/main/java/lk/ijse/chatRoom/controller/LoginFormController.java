@@ -38,13 +38,14 @@ public class LoginFormController {
 
     @FXML
     private TextField txtUserName;
-    UserBo userBo=new UserBoImpl();
+    UserBo userBo = new UserBoImpl();
 
     @FXML
     void forgetPasswordOnAction(ActionEvent event) {
 
     }
-    public void initialize() throws SQLException, IOException{
+
+    public void initialize() throws SQLException, IOException {
         new Thread(() -> {
             try {
                 Server server = Server.getInstance();
@@ -70,8 +71,8 @@ public class LoginFormController {
                 Stage primaryStage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chat_form.fxml"));
                 Parent root = fxmlLoader.load();
-                ChatFormController controller =fxmlLoader.getController();
-                System.out.println("controller "+controller);
+                ChatFormController controller = fxmlLoader.getController();
+                System.out.println("controller " + controller);
                 controller.initialize(txtUserName.getText());
 
 
@@ -85,12 +86,10 @@ public class LoginFormController {
                 primaryStage.show();
 
                 txtUserName.clear();
-            }
-            else {
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Incorrect").show();
             }
-        }
-        else {
+        } else {
             new Alert(Alert.AlertType.ERROR, "Please enter your name").show();
         }
     }

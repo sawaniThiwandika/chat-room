@@ -1,6 +1,7 @@
 package lk.ijse.chatRoom.controller;
 
 
+import com.google.protobuf.StringValue;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.vdurmont.emoji.EmojiParser;
@@ -62,18 +63,19 @@ public class ChatFormController {
     private AnchorPane anchorPane;
     @FXML
     private ScrollPane scrollpane;
+    @FXML
+    private Button sinhalaBtn;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
     Socket socket;
     ServerSocket serverSocket;
-    String  user="";
-
+    String user = "";
 
 
     String path;
 
     GridPane gridPane = new GridPane();
-    ScrollPane scrollPane=new ScrollPane(gridPane);
+    ScrollPane scrollPane = new ScrollPane(gridPane);
 
 
 
@@ -86,19 +88,19 @@ public class ChatFormController {
 
             @Override
             public void run() {
-                try{
+                try {
                     socket = new Socket("localhost", 3000);
                     dataInputStream = new DataInputStream(socket.getInputStream());
                     dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     System.out.println("Client connected");
                     //ServerFormController.receiveMessage(clientName+" joined.");
 
-                    while (socket.isConnected()){
+                    while (socket.isConnected()) {
                         String receivingMsg = dataInputStream.readUTF();
-                        receiveMessage(receivingMsg,vBox);
+                        receiveMessage(receivingMsg, vBox);
 
                     }
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -114,8 +116,9 @@ public class ChatFormController {
         // emoji();
 
     }
+
     public static void receiveMessage(String msg, VBox vBox) throws IOException {
-        if (msg.matches(".*\\.(png|jpe?g|gif)$")){
+        if (msg.matches(".*\\.(png|jpe?g|gif)$")) {
             HBox hBoxName = new HBox();
             hBoxName.setAlignment(Pos.CENTER_LEFT);
             Text textName = new Text(msg.split("[-]")[0]);
@@ -128,7 +131,7 @@ public class ChatFormController {
             imageView.setFitWidth(200);
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.setPadding(new Insets(5,5,5,10));
+            hBox.setPadding(new Insets(5, 5, 5, 10));
             hBox.getChildren().add(imageView);
             Platform.runLater(new Runnable() {
                 @Override
@@ -138,13 +141,13 @@ public class ChatFormController {
                 }
             });
 
-        }else {
+        } else {
             String name = msg.split("-")[0];
             String msgFromServer = msg.split("-")[1];
 
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.setPadding(new Insets(5,5,5,10));
+            hBox.setPadding(new Insets(5, 5, 5, 10));
 
             HBox hBoxName = new HBox();
             hBoxName.setAlignment(Pos.CENTER_LEFT);
@@ -154,7 +157,7 @@ public class ChatFormController {
 
             Label text = new Label(msgFromServer);
             text.setStyle("-fx-background-color: #abb8c3;-fx-font-size: 20;-fx-color: black; -fx-font-weight: bold; -fx-background-radius: 5px");
-            text.setPadding(new Insets(5,10,5,10));
+            text.setPadding(new Insets(5, 10, 5, 10));
 
             hBox.getChildren().add(text);
 
@@ -168,9 +171,10 @@ public class ChatFormController {
             });
         }
     }
+
     private void sendMsg(String msgToSend) {
-        if (!msgToSend.isEmpty()){
-            if (!msgToSend.matches(".*\\.(png|jpe?g|gif)$")){
+        if (!msgToSend.isEmpty()) {
+            if (!msgToSend.matches(".*\\.(png|jpe?g|gif)$")) {
 
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -197,8 +201,7 @@ public class ChatFormController {
                 vBox.setAlignment(Pos.TOP_LEFT);
 
                 textMessage.clear();
-            }
-            else {
+            } else {
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.CENTER_RIGHT);
                 hBox.setPadding(new Insets(5, 5, 0, 10));
@@ -231,7 +234,6 @@ public class ChatFormController {
     }
 
 
-
     private void loadAllChats() throws IOException {
 
     }
@@ -249,7 +251,7 @@ public class ChatFormController {
             path = selectedFile.getAbsolutePath();
             sendMsg(path);
         } else {
-            path=null;
+            path = null;
         }
 
     }
@@ -257,10 +259,9 @@ public class ChatFormController {
     @FXML
     void emojiButtonOnAction(ActionEvent event) {
 
-        if(!scrollPane.isVisible()){
+        if (!scrollPane.isVisible()) {
             openEmojiBox();
-        }
-        else {
+        } else {
             scrollPane.setVisible(false);
         }
 
@@ -278,11 +279,13 @@ public class ChatFormController {
         sendMsg(textMessage.getText());
 
     }
+
     public void shutdown() {
         // cleanup code here...
         // ServerFormController.receiveMessage(clientName+" left.");
     }
-    public  void openEmojiBox(){
+
+    public void openEmojiBox() {
         int x = 0;
         int y = 0;
 
@@ -292,8 +295,8 @@ public class ChatFormController {
         gridPane.setLayoutY(200);
         gridPane.setStyle("-fx-font-size: 30");
 
-        String[] emojies={"&#128512;","&#128513;","&#128514;","&#128515;","&#128516;","&#128517;","\uD83D\uDE00",
-                "\uD83D\uDE01", "\uD83D\uDE02", "\uD83D\uDE03", "\uD83D\uDE04", "\uD83D\uDE05","&#8986;","\uD83D\uDE00",
+        String[] emojies = {"&#128512;", "&#128513;", "&#128514;", "&#128515;", "&#128516;", "&#128517;", "\uD83D\uDE00",
+                "\uD83D\uDE01", "\uD83D\uDE02", "\uD83D\uDE03", "\uD83D\uDE04", "\uD83D\uDE05", "&#8986;", "\uD83D\uDE00",
                 "\uD83D\uDE01",
                 "\uD83D\uDE02",
                 "\uD83D\uDE03",
@@ -312,8 +315,7 @@ public class ChatFormController {
                 "\uD83D\uDE10",
                 "\uD83D\uDE11",
                 "\uD83D\uDE12",
-                "\uD83D\uDE13" };
-
+                "\uD83D\uDE13"};
 
 
         for (int i = 0; i < emojies.length; i++) {
@@ -335,6 +337,7 @@ public class ChatFormController {
         scrollPane.setFitToHeight(true);
         scrollPane.setVisible(true);
     }
+
     private void emojiButtonAction(ActionEvent event) {
         JFXButton button = (JFXButton) event.getSource();
         textMessage.appendText(button.getText());
@@ -343,12 +346,97 @@ public class ChatFormController {
     }
 
     public void setClientName(String text) {
-        System.out.println("user "+text);
+        System.out.println("user " + text);
         user = text;
 
     }
+
     public String getClientName() {
-       return user;
+        return user;
+
+    }
+    @FXML
+    void SinahalaButtonOnAction(ActionEvent event) {
+        if (!scrollPane.isVisible()) {
+            openSinhalaLetters();
+        } else {
+            scrollPane.setVisible(false);
+        }
+    }
+    public void openSinhalaLetters(){
+        int x = 0;
+        int y = 0;
+
+        // GridPane gridPane = new GridPane();
+        gridPane.setPrefSize(150, 300);
+        gridPane.setLayoutX(200);
+        gridPane.setLayoutY(200);
+        gridPane.setStyle("-fx-font-size: 30");
+        int[] sinhalaLetterCodePoints = {
+                0x0D9A, // ක
+                0x0D9B, // ඛ
+                0x0D9A, 0x0DCF, // කා
+                0x0D9B, 0x0DCF, // ඛා
+                0x0D9A, 0x0DD0, // කැ
+                0x0D9B, 0x0DD0, // ඛැ
+                0x0D9A, 0x0DD1, // කෑ
+                0x0D9B, 0x0DD1, // ඛෑ
+                0x0D9A, 0x0DD2, // කි
+                0x0D9B, 0x0DD2, // ඛි
+                0x0D9A, 0x0DD3, // කී
+                0x0D9B, 0x0DD3, // ඛී
+                0x0D9A, 0x0DD4, // කු
+                0x0D9B, 0x0DD4, // ඛු
+                0x0D9A, 0x0DD6, // කූ
+                0x0D9B, 0x0DD6, // ඛූ
+                0x0DAF, // ද
+                0x0DB6, // බ
+                0x0DB4, // ප
+                0x0DB8, // ම
+                0x0DC0, // ව
+                0x0DC3, // ස
+                0x0DC4, // හ
+                0x0DBA, // ය
+                0x0DBB, // ර
+                0x0DB1, // න
+                0x0DBD, // ල
+                0x0DC5, // ළ
+                0x0DA2, // ජ
+                0x0DC1, // ශ
+                0x0DC2  // ෂ
+        };
+
+
+
+        for (int codePoint : sinhalaLetterCodePoints) {
+            // Convert the code point to a string and append to the result
+            String string = Character.toString((char) codePoint);
+
+            JFXButton button = new JFXButton(string);
+            button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
+            button.setOnAction(this::sinhalaLetterButtonAction);
+
+            if (x / 4 == 1) {
+                x = 0;
+                y = y + 1;
+            }
+
+            gridPane.add(button, x, y);
+            x++;
+
+        }
+
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setVisible(true);
+           // System.out.println(sinhalaCharacter);
+
+    }
+    private void sinhalaLetterButtonAction(ActionEvent event) {
+        JFXButton button = (JFXButton) event.getSource();
+        textMessage.appendText(button.getText());
+        scrollPane.setVisible(false);
 
     }
 }

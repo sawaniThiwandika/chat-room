@@ -18,7 +18,7 @@ public class ClientHandler {
             this.socket = socket;
             this.dataInputStream = new DataInputStream(socket.getInputStream());
             this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -29,16 +29,16 @@ public class ClientHandler {
                     while (socket.isConnected()) {// sever hdl dena socket eka
                         System.out.println("client handler while loop ekaethule mn dan inne");
                         msg = dataInputStream.readUTF();
-                        clients=Server.getClientList();
-                       for (ClientHandler clientHandler : clients) {
-                           System.out.println("client size in clienthandler "+clients.size());
+                        clients = Server.getClientList();
+                        for (ClientHandler clientHandler : clients) {
+                            System.out.println("client size in clienthandler " + clients.size());
                             if (clientHandler.socket.getPort() != socket.getPort()) {
                                 clientHandler.dataOutputStream.writeUTF(msg);
                                 clientHandler.dataOutputStream.flush();
                             }
                         }
                     }
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
