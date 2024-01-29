@@ -74,8 +74,10 @@ public class ChatFormController {
 
     String path;
 
-    GridPane gridPane = new GridPane();
-    ScrollPane scrollPane = new ScrollPane(gridPane);
+    GridPane gridPaneEmoji = new GridPane();
+    GridPane gridPaneSinhala = new GridPane();
+    ScrollPane scrollPane = new ScrollPane();
+
 
 
 
@@ -290,10 +292,10 @@ public class ChatFormController {
         int y = 0;
 
         // GridPane gridPane = new GridPane();
-        gridPane.setPrefSize(150, 300);
-        gridPane.setLayoutX(200);
-        gridPane.setLayoutY(200);
-        gridPane.setStyle("-fx-font-size: 30");
+        gridPaneEmoji.setPrefSize(150, 300);
+        gridPaneEmoji.setLayoutX(200);
+        gridPaneEmoji.setLayoutY(200);
+        gridPaneEmoji.setStyle("-fx-font-size: 30");
 
         String[] emojies = {"&#128512;", "&#128513;", "&#128514;", "&#128515;", "&#128516;", "&#128517;", "\uD83D\uDE00",
                 "\uD83D\uDE01", "\uD83D\uDE02", "\uD83D\uDE03", "\uD83D\uDE04", "\uD83D\uDE05", "&#8986;", "\uD83D\uDE00",
@@ -328,11 +330,11 @@ public class ChatFormController {
                 y = y + 1;
             }
 
-            gridPane.add(button, x, y);
+            gridPaneEmoji.add(button, x, y);
             x++;
         }
 
-
+        scrollPane.setContent(gridPaneEmoji);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.setVisible(true);
@@ -360,7 +362,9 @@ public class ChatFormController {
         if (!scrollPane.isVisible()) {
             openSinhalaLetters();
         } else {
+
             scrollPane.setVisible(false);
+
         }
     }
     public void openSinhalaLetters(){
@@ -368,10 +372,10 @@ public class ChatFormController {
         int y = 0;
 
         // GridPane gridPane = new GridPane();
-        gridPane.setPrefSize(150, 300);
-        gridPane.setLayoutX(200);
-        gridPane.setLayoutY(200);
-        gridPane.setStyle("-fx-font-size: 30");
+        gridPaneSinhala.setPrefSize(150, 300);
+        gridPaneSinhala.setLayoutX(200);
+        gridPaneSinhala.setLayoutY(200);
+        gridPaneSinhala.setStyle("-fx-font-size: 30");
         int[] sinhalaLetterCodePoints = {
                 0x0D9A, // ක
                 0x0D9B, // ඛ
@@ -421,12 +425,12 @@ public class ChatFormController {
                 y = y + 1;
             }
 
-            gridPane.add(button, x, y);
+            gridPaneSinhala.add(button, x, y);
             x++;
 
         }
 
-
+        scrollPane.setContent(gridPaneSinhala);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.setVisible(true);
