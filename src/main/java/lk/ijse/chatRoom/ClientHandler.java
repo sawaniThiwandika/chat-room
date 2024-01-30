@@ -1,9 +1,16 @@
 package lk.ijse.chatRoom;
 
+import lk.ijse.chatRoom.bo.Impl.MessageBoImpl;
+import lk.ijse.chatRoom.bo.MessageBo;
+import lk.ijse.chatRoom.dto.MessageDto;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class ClientHandler {
@@ -12,6 +19,7 @@ public class ClientHandler {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private String msg = "";
+    MessageBo messageBo=new MessageBoImpl();
 
     public ClientHandler(Socket socket) {
         try {
@@ -29,6 +37,7 @@ public class ClientHandler {
                     while (socket.isConnected()) {// sever hdl dena socket eka
                         //System.out.println("client handler while loop ekaethule mn dan inne");
                         msg = dataInputStream.readUTF();
+                        sendMessageToDatabase(msg);
                         clients = Server.getClientList();
                         for (ClientHandler clientHandler : clients) {
                             if (clientHandler.socket.getPort() != socket.getPort()) {
@@ -42,5 +51,15 @@ public class ClientHandler {
                 }
             }
         }).start();
+    }
+
+    private void sendMessageToDatabase(String msg) {
+        String clientName = msg.split("-")[0];
+        String msgFromCient = msg.split("-")[1];
+        try {
+            messageBo.saveMessage(new MessageDto(clientName, LocalDate.now(),msgFromCient,clientName, LocalTime.now()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

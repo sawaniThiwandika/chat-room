@@ -208,7 +208,6 @@ public class ChatFormController {
                 imageview.setFitHeight(200);
                 imageview.setFitWidth(200);
                 hBox.getChildren().add(imageview);
-
                 HBox hBoxTime = new HBox();
                 hBoxTime.setAlignment(Pos.CENTER_RIGHT);
                 hBoxTime.setPadding(new Insets(0, 5, 5, 10));
@@ -234,6 +233,7 @@ public class ChatFormController {
 
 
     private void loadAllChats() throws IOException {
+
 
     }
 
@@ -277,6 +277,7 @@ public class ChatFormController {
     void sendButtonOnAction(ActionEvent event) throws IOException {
         sendMsg(textMessage.getText());
 
+
     }
 
     public void shutdown() {
@@ -289,7 +290,7 @@ public class ChatFormController {
         int y = 0;
 
         // GridPane gridPane = new GridPane();
-        gridPaneEmoji.setPrefSize(150, 300);
+        gridPaneEmoji.setPrefSize(400, 400);
         gridPaneEmoji.setLayoutX(200);
         gridPaneEmoji.setLayoutY(200);
         gridPaneEmoji.setStyle("-fx-font-size: 30");
