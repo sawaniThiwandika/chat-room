@@ -7,4 +7,5 @@ import java.sql.SQLException;
 public interface UserBo {
 
     boolean checkUserNamePassword(UserDto userDto) throws SQLException;
+    boolean saveUser(UserDto userDto) throws SQLException;
 }

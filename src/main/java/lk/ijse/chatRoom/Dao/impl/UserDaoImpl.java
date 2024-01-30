@@ -24,4 +24,15 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
+
+    @Override
+    public boolean save(User user) throws SQLException {
+        Connection connection= DbConnection.getInstance().getConnection();
+        String sql="INSERT INTO user VALUES (?,?)";
+        PreparedStatement pstm=connection.prepareStatement(sql);
+        pstm.setString(1,user.getUserName());
+        pstm.setString(2,user.getPassword());
+
+        return  pstm.executeUpdate()>0;
+    }
 }

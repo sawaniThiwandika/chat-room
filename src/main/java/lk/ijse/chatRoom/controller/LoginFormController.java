@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.chatRoom.Dao.UserDao;
 import lk.ijse.chatRoom.Dao.impl.UserDaoImpl;
@@ -23,7 +24,8 @@ import java.net.URL;
 import java.sql.SQLException;
 
 public class LoginFormController {
-
+    @FXML
+    private AnchorPane loginPage;
     @FXML
     private Button forgetPasswordButton;
 
@@ -96,8 +98,13 @@ public class LoginFormController {
 
 
     @FXML
-    void registerButtonOnAction(ActionEvent event) {
-
+    void registerButtonOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/add_user_form.fxml"));
+        Scene scene = new Scene(anchorPane);
+        Stage stage = (Stage) loginPage.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("add user");
+        stage.centerOnScreen();
     }
 
 

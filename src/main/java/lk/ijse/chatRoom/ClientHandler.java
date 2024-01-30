@@ -27,11 +27,10 @@ public class ClientHandler {
             public void run() {
                 try {
                     while (socket.isConnected()) {// sever hdl dena socket eka
-                        System.out.println("client handler while loop ekaethule mn dan inne");
+                        //System.out.println("client handler while loop ekaethule mn dan inne");
                         msg = dataInputStream.readUTF();
                         clients = Server.getClientList();
                         for (ClientHandler clientHandler : clients) {
-                            System.out.println("client size in clienthandler " + clients.size());
                             if (clientHandler.socket.getPort() != socket.getPort()) {
                                 clientHandler.dataOutputStream.writeUTF(msg);
                                 clientHandler.dataOutputStream.flush();

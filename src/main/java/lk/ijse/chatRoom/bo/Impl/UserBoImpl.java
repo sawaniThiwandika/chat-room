@@ -23,4 +23,9 @@ UserDao userDao=new UserDaoImpl();
     }
         return false;
     }
+
+    @Override
+    public boolean saveUser(UserDto userDto) throws SQLException {
+        return userDao.save(new User(userDto.getUserName(), userDto.getPassword()));
+    }
 }

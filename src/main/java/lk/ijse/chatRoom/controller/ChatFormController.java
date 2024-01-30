@@ -99,7 +99,7 @@ public class ChatFormController {
 
                     while (socket.isConnected()) {
                         String receivingMsg = dataInputStream.readUTF();
-                        receiveMessage(receivingMsg, vBox);
+                        receiveMessage(receivingMsg,vBox);
 
                     }
                 } catch (IOException e) {
@@ -114,9 +114,6 @@ public class ChatFormController {
                 scrollpane.setVvalue((Double) newValue);
             }
         });
-
-        // emoji();
-
     }
 
     public static void receiveMessage(String msg, VBox vBox) throws IOException {
@@ -434,8 +431,6 @@ public class ChatFormController {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.setVisible(true);
-           // System.out.println(sinhalaCharacter);
-
     }
     private void sinhalaLetterButtonAction(ActionEvent event) {
         JFXButton button = (JFXButton) event.getSource();

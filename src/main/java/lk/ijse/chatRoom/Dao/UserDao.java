@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface UserDao {
     public ArrayList<User> getAllUsers() throws SQLException;
+    public boolean save(User user) throws SQLException;
 }
