@@ -116,20 +116,29 @@ public class ChatFormController {
         });
     }
 
-    public static void receiveMessage(String msg, VBox vBox) throws IOException {
+    public  void receiveMessage(String msg, VBox vBox) throws IOException {
         if (msg.matches(".*\\.(png|jpe?g|gif)$")) {
             HBox hBoxName = new HBox();
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_LEFT);
             hBoxName.setAlignment(Pos.CENTER_LEFT);
-            Text textName = new Text(msg.split("[-]")[0]);
-            TextFlow textFlowName = new TextFlow(textName);
-            hBoxName.getChildren().add(textFlowName);
+            String textName = msg.split("[-]")[0];
+
+            if (getClientName().equals(textName)){
+                hBoxName.setAlignment(Pos.CENTER_RIGHT);
+                hBox.setAlignment(Pos.CENTER_RIGHT);
+                textName="Me";
+
+            }
+            Label nameLabel = new Label(textName);
+            hBoxName.getChildren().add(nameLabel);
 
             Image image = new Image(msg.split("[-]")[1]);
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(200);
             imageView.setFitWidth(200);
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER_LEFT);
+
+
             hBox.setPadding(new Insets(5, 5, 5, 10));
             hBox.getChildren().add(imageView);
             Platform.runLater(new Runnable() {
@@ -146,16 +155,22 @@ public class ChatFormController {
 
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.setPadding(new Insets(5, 5, 5, 10));
-
             HBox hBoxName = new HBox();
             hBoxName.setAlignment(Pos.CENTER_LEFT);
-
-            Label textName = new Label(name);
-            hBoxName.getChildren().add(textName);
-
+            Label textName = new Label();
             Label text = new Label(msgFromServer);
             text.setStyle("-fx-background-color: #abb8c3;-fx-font-size: 20;-fx-color: black; -fx-font-weight: bold; -fx-background-radius: 5px");
+
+            if (getClientName().equals(name)){
+                hBoxName.setAlignment(Pos.CENTER_RIGHT);
+                hBox.setAlignment(Pos.CENTER_RIGHT);
+                text.setStyle("-fx-background-color: #0693e3; -fx-font-size:20;-fx-text-fill: white; -fx-font-weight: bold; -fx-color: white; -fx-background-radius: 5px");
+                name="Me";
+            }
+
+            textName.setText(name);
+            hBoxName.getChildren().add(textName);
+            hBox.setPadding(new Insets(5, 5, 5, 10));
             text.setPadding(new Insets(5, 10, 5, 10));
 
             hBox.getChildren().add(text);
@@ -229,12 +244,6 @@ public class ChatFormController {
                 e.printStackTrace();
             }
         }
-    }
-
-
-    private void loadAllChats() throws IOException {
-
-
     }
 
     @FXML
@@ -411,7 +420,6 @@ public class ChatFormController {
 
 
         for (int codePoint : sinhalaLetterCodePoints) {
-            // Convert the code point to a string and append to the result
             String string = Character.toString((char) codePoint);
 
             JFXButton button = new JFXButton(string);
