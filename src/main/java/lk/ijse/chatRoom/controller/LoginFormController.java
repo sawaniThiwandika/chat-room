@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.chatRoom.ClientHandler;
 import lk.ijse.chatRoom.Dao.UserDao;
 import lk.ijse.chatRoom.Dao.impl.UserDaoImpl;
 import lk.ijse.chatRoom.Server;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 
 public class LoginFormController {
     @FXML
@@ -40,8 +42,8 @@ public class LoginFormController {
 
     @FXML
     private TextField txtUserName;
-    UserBo userBo = new UserBoImpl();
-
+    List<ClientHandler> clientList;
+    Server server;
     @FXML
     void forgetPasswordOnAction(ActionEvent event) {
 
@@ -50,8 +52,9 @@ public class LoginFormController {
     public void initialize() throws SQLException, IOException {
         new Thread(() -> {
             try {
-                Server server = Server.getInstance();
+              server = Server.getInstance();
                 server.makeSocket();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -64,11 +67,9 @@ public class LoginFormController {
         boolean userNamePassword;
 
         if (!txtUserName.getText().isEmpty()) {
-            try {
-                userNamePassword = userBo.checkUserNamePassword(new UserDto(txtUserName.getText(), txtPassword.getText()));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+
+                userNamePassword =server.checkUser (txtUserName.getText(), txtPassword.getText());
+
             if (userNamePassword) {
                 Stage primaryStage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chat_form.fxml"));
@@ -76,7 +77,6 @@ public class LoginFormController {
                 ChatFormController controller = fxmlLoader.getController();
                 System.out.println("controller " + controller);
                 controller.initialize(txtUserName.getText());
-
 
                 primaryStage.setScene(new Scene(root));
                 primaryStage.setTitle(txtUserName.getText());

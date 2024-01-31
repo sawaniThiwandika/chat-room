@@ -299,7 +299,7 @@ public class ChatFormController {
         int y = 0;
 
         // GridPane gridPane = new GridPane();
-        gridPaneEmoji.setPrefSize(400, 400);
+        gridPaneEmoji.setPrefSize(200, 200);
         gridPaneEmoji.setLayoutX(200);
         gridPaneEmoji.setLayoutY(200);
         gridPaneEmoji.setStyle("-fx-font-size: 30");
@@ -332,7 +332,7 @@ public class ChatFormController {
             button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
             button.setOnAction(this::emojiButtonAction);
 
-            if (x / 4 == 1) {
+            if (x / 5 == 1) {
                 x = 0;
                 y = y + 1;
             }
@@ -350,7 +350,7 @@ public class ChatFormController {
     private void emojiButtonAction(ActionEvent event) {
         JFXButton button = (JFXButton) event.getSource();
         textMessage.appendText(button.getText());
-        scrollPane.setVisible(false);
+       // scrollPane.setVisible(false);
 
     }
 
@@ -379,7 +379,7 @@ public class ChatFormController {
         int y = 0;
 
         // GridPane gridPane = new GridPane();
-        gridPaneSinhala.setPrefSize(150, 300);
+        gridPaneSinhala.setPrefSize(200, 200);
         gridPaneSinhala.setLayoutX(200);
         gridPaneSinhala.setLayoutY(200);
         gridPaneSinhala.setStyle("-fx-font-size: 30");
@@ -444,7 +444,7 @@ public class ChatFormController {
     private void sinhalaLetterButtonAction(ActionEvent event) {
         JFXButton button = (JFXButton) event.getSource();
         textMessage.appendText(button.getText());
-        scrollPane.setVisible(false);
+       // scrollPane.setVisible(false);
 
     }
 }

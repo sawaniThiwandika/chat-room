@@ -54,6 +54,7 @@ public class ClientHandler {
 
                         try {
                             msg = dataInputStream.readUTF();
+                            System.out.println( msg.split("-")[0]+" : "+ msg.split("-")[1]);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
