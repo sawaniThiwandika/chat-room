@@ -258,6 +258,7 @@ public class ChatFormController {
         if (selectedFile != null) {
             path = selectedFile.getAbsolutePath();
             sendMsg(path);
+            selectedFile.exists();
         } else {
             path = null;
         }
@@ -290,8 +291,7 @@ public class ChatFormController {
     }
 
     public void shutdown() {
-        // cleanup code here...
-        // ServerFormController.receiveMessage(clientName+" left.");
+        sendMsg("left");
     }
 
     public void openEmojiBox() {

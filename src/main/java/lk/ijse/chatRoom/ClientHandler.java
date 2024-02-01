@@ -54,16 +54,23 @@ public class ClientHandler {
 
                         try {
                             msg = dataInputStream.readUTF();
+
+                          //  else{
                             System.out.println( msg.split("-")[0]+" : "+ msg.split("-")[1]);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        sendMessageToDatabase(msg);
-                        clients = Server.getClientList();
-                        for (ClientHandler clientHandler : clients) {
-                            if (clientHandler.socket.getPort() != socket.getPort()) {
-                                clientHandler.dataOutputStream.writeUTF(msg);
-                                clientHandler.dataOutputStream.flush();
+                        if(msg.split("-")[1].equals("left")){
+                            System.out.println( msg.split("-")[0]+" left the chat");
+                        }
+                        else {
+                            sendMessageToDatabase(msg);
+                            clients = Server.getClientList();
+                            for (ClientHandler clientHandler : clients) {
+                                if (clientHandler.socket.getPort() != socket.getPort()) {
+                                    clientHandler.dataOutputStream.writeUTF(msg);
+                                    clientHandler.dataOutputStream.flush();
+                                }
                             }
                         }
                     }
